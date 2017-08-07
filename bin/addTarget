@@ -1,0 +1,32 @@
+'use strict';
+
+var argv = require('yargs')
+    .usage('Usage: $0 [image] -t [host] -c [keys]')
+    .demand(1)
+    .default('t', 'http://localhost:8888').alias('t', 'host')
+    .default('c', 'keys.json').alias('c', 'keys')
+    .help('h').alias('h', 'help')
+    .epilog('copyright 2015, sightp.com')
+    .argv;
+
+var fs = require('fs');
+
+var imageFn = argv._[0];
+var host = argv.host;
+var keys = JSON.parse(fs.readFileSync(argv.keys));
+
+var farmer = require('../farmer')(host, keys.appKey, keys.appSecret);
+
+farmer.createTarget({
+    'image': fs.readFileSync(imageFn).toString('base64'),
+    'name':'sdk-test',
+    'size':'20',
+    'meta':'http://my.com/my-3d-model-example',
+    'type':'ImageTarget'
+})
+.then(function(resp) {
+    console.log(resp.result.targetId);
+})
+.fail(function(err) {
+    console.log(err);
+});

@@ -1,8 +1,8 @@
 'use strict';
 
 var argv = require('yargs')
-    .usage('Usage: $0 [targetId] -t [host] -c [keys]')
-    .demand(0)
+    .usage('Usage: $0 <targetId> [image] -t [host] -c [keys]')
+    .demand(1)
     .default('t', 'http://localhost:8888').alias('t', 'host')
     .default('c', 'keys.json').alias('c', 'keys')
     .help('h').alias('h', 'help')
@@ -11,14 +11,22 @@ var argv = require('yargs')
 
 var fs = require('fs');
 
+var targetId = argv._[0];
+var imageFn = argv._[1];
 var host = argv.host;
 var keys = JSON.parse(fs.readFileSync(argv.keys));
 
 var farmer = require('../farmer')(host, keys.appKey, keys.appSecret);
 
-farmer.getTargetsCount()
+farmer.updateTarget(targetId ,{
+    'image': fs.readFileSync(imageFn).toString('base64'),
+    'name':'sdk-test-update',
+    'size':'20',
+    'meta':'update meta data',
+    'type':'ImageTarget'
+})
 .then(function(resp) {
-    console.log(resp.result);
+    console.log(resp.result.targetId);
 })
 .fail(function(err) {
     console.log(err);

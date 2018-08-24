@@ -7,11 +7,11 @@ function genSign(params, appSecret) {
         return key+params[key];
     }).join('') + appSecret;
 
-    return crypto.createHash('sha1').update(paramsStr).digest('hex');
+    return crypto.createHash('sha256').update(paramsStr).digest('hex');
 }
 
-exports.signParams = function(params, date, appKey, appSecret) {
-    params.date = date;
+exports.signParams = function(params, timestamp, appKey, appSecret) {
+    params.timestamp = timestamp;
     params.appKey = appKey;
     params.signature = genSign(params, appSecret);
 

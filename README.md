@@ -1,6 +1,11 @@
+### Updates
+* 2018/08/24 Upgrade with new authentication for EasyAR CRS Cloud 3.0 API, and more APIs are opened for managing databases.
+
+* 2018/08/07 NodeJS SDK v1.0 for EasyAR CRS Cloud.
+
 ### Classes
 
-#### Farmer
+#### Targeter
 CRUD for targets
 
 * `function farmerClient(host, appKey, appSecret)`
@@ -15,7 +20,7 @@ CRUD for targets
   * `function getDetectionGrade(image)`
   * `function getTrackingGrade(image)`
 
-#### Gateway
+#### Searcher
 Searching of targets
 
 * `function gatewayClient(host, appKey, appSecret)`

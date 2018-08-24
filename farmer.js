@@ -11,7 +11,7 @@ function farmerClient(host, appKey, appSecret) {
     function signParams(params) {
         params = params || {};
         return auth.signParams(params,
-            new Date().toISOString(),
+            new Date().getTime(),
             appKey,
             appSecret
         );
@@ -54,6 +54,17 @@ function farmerClient(host, appKey, appSecret) {
             .query(signParams({
                 "last":last,
                 "limit":limit
+            }))
+            .end(done(resolve, reject));
+        });
+    }
+
+    function getTargetsByPage(pageNum,pageSize) {
+        return Q.promise(function(resolve, reject) {
+            request.get(host + '/targets/infos?pageNum=' + pageNum + '&pageSize=' + pageSize)
+            .query(signParams({
+                "pageNum":pageNum,
+                "pageSize":pageSize
             }))
             .end(done(resolve, reject));
         });
@@ -121,6 +132,7 @@ function farmerClient(host, appKey, appSecret) {
         getTargets: getTargets,
         createTarget: createTarget,
         getTarget: getTarget,
+        getTargetsByPage:getTargetsByPage,
         updateTarget: updateTarget,
         deleteTarget: deleteTarget,
         similar: similar,

@@ -1,0 +1,34 @@
+{
+  "name": "nodejs-sdk",
+  "version": "1.0.2",
+  "description": "EasyAR CRS SDK implements nodejs of the CRS API for developers.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ea2305/nodejs-sdk.git"
+  },
+  "dependencies": {
+    "crypto": "1.0.1",
+    "msgpack5": "4.2.1",
+    "q": "1.5.1",
+    "superagent": "4.1.0",
+    "ws": "6.1.4",
+    "yargs": "3.32.0"
+  },
+  "keywords": [
+    "easyar",
+    "cloud",
+    "sdk",
+    "javascript",
+    "nodejs"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ea2305/nodejs-sdk/issues"
+  },
+  "homepage": "https://github.com/ea2305/nodejs-sdk#readme"
+}

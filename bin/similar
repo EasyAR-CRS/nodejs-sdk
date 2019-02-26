@@ -23,6 +23,6 @@ farmer.similar({
 .then(function(resp) {
     console.log(resp.result);
 })
-.fail(function(err) {
+.catch(function(err) {
     console.log(err);
 });

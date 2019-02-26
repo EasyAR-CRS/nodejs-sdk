@@ -21,6 +21,6 @@ farmer.deleteTarget(targetId)
 .then(function(resp) {
     console.log(resp.result.targetId);
 })
-.fail(function(err) {
+.catch(function(err) {
     console.log(err);
 });

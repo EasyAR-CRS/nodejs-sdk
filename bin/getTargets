@@ -19,6 +19,6 @@ var farmer = require('../farmer')(host, keys.appKey, keys.appSecret);
 farmer.getTargetsByPage(1,10).then(function(resp) {
     console.log(resp.result);
 })
-.fail(function(err) {
+.catch(function(err) {
     console.log(err);
 });

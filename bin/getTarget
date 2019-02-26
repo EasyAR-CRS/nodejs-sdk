@@ -24,6 +24,6 @@ farmer.getTarget(targetId)
     fs.writeFileSync('trackingImage.jpg', new Buffer(trackingImage, 'base64'));
     console.log(resp);
 })
-.fail(function(err) {
+.catch(function(err) {
     console.log(err);
 });

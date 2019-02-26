@@ -3,8 +3,6 @@
 var request = require('superagent');
 var websocket = require('ws');
 var msgpack = require('msgpack5')();
-var Q = require('q');
-Q.longStackSupport = true;
 
 var auth = require('./auth');
 
@@ -36,14 +34,14 @@ function gatewayClient(host, appKey, appSecret) {
     }
 
     function ping() {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             request.get(host + '/ping')
             .end(done(resolve, reject));
         });
     }
 
     function search(image) {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             request.post(host + '/search')
             .send(signParams(image))
             .end(done(resolve, reject));
@@ -51,7 +49,7 @@ function gatewayClient(host, appKey, appSecret) {
     }
 
     function createTunnel() {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             request.post(host + '/tunnels/')
             .send(signParams())
             .end(done(resolve, reject));
@@ -59,7 +57,7 @@ function gatewayClient(host, appKey, appSecret) {
     }
 
     function searchViaTunnelOnHost(host, tunnel, image) {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             var searchTunnel = 'ws://' + host + '/services/recognize/' + tunnel;
             var ws = new websocket(searchTunnel);
             ws.on('open', function() {

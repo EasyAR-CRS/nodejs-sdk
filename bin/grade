@@ -23,6 +23,6 @@ farmer.getDetectionGrade({
 .then(function(resp) {
     console.log(resp);
 })
-.fail(function(err) {
+.catch(function(err) {
     console.log(err);
 });

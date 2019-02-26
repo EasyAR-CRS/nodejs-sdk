@@ -47,7 +47,7 @@ farmer.createTarget({
 .then(function(resp) {
     console.log(resp.result.targetId);
 })
-.fail(function(err) {
+.catch(function(err) {
     console.log(err);
 });
 ```
@@ -68,7 +68,7 @@ gateway.createTunnel()
 .then(function(resp) {
     console.log(resp.result.target.targetId);
 })
-.fail(function(err) {
+.catch(function(err) {
     console.log(err);
 });
 ```

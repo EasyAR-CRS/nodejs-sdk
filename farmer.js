@@ -1,8 +1,6 @@
 'use strict';
 
 var request = require('superagent');
-var Q = require('q');
-Q.longStackSupport = true;
 
 var auth = require('./auth');
 
@@ -34,14 +32,14 @@ function farmerClient(host, appKey, appSecret) {
     }
 
     function ping() {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             request.get(host + '/ping')
             .end(done(resolve, reject));
-        });
+        })
     }
 
     function getTargetsCount() {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             request.get(host + '/targets/count')
             .query(signParams())
             .end(done(resolve, reject));
@@ -49,7 +47,7 @@ function farmerClient(host, appKey, appSecret) {
     }
 
     function getTargets(limit,last) {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             request.get(host + '/targets/?last=' + last + '&limit=' + limit)
             .query(signParams({
                 "last":last,
@@ -60,7 +58,7 @@ function farmerClient(host, appKey, appSecret) {
     }
 
     function getTargetsByPage(pageNum,pageSize) {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             request.get(host + '/targets/infos?pageNum=' + pageNum + '&pageSize=' + pageSize)
             .query(signParams({
                 "pageNum":pageNum,
@@ -71,7 +69,7 @@ function farmerClient(host, appKey, appSecret) {
     }
 
     function createTarget(target) {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             request.post(host + '/targets/')
             .send(signParams(target))
             .end(done(resolve, reject));
@@ -79,7 +77,7 @@ function farmerClient(host, appKey, appSecret) {
     }
 
     function getTarget(targetId) {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             request.get(host + '/target/' + targetId)
             .query(signParams())
             .end(done(resolve, reject));
@@ -87,7 +85,7 @@ function farmerClient(host, appKey, appSecret) {
     }
 
     function updateTarget(targetId, data) {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             request.put(host + '/target/' + targetId)
             .send(signParams(data))
             .end(done(resolve, reject));
@@ -95,7 +93,7 @@ function farmerClient(host, appKey, appSecret) {
     }
 
     function deleteTarget(targetId) {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             request.del(host + '/target/' + targetId)
             .query(signParams())
             .end(done(resolve, reject));
@@ -103,7 +101,7 @@ function farmerClient(host, appKey, appSecret) {
     }
 
     function similar(image) {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             request.post(host + '/similar/')
             .send(signParams(image))
             .end(done(resolve, reject));
@@ -111,7 +109,7 @@ function farmerClient(host, appKey, appSecret) {
     }
 
     function getDetectionGrade(image) {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             request.post(host + '/grade/detection/')
             .send(signParams(image))
             .end(done(resolve, reject));
@@ -119,7 +117,7 @@ function farmerClient(host, appKey, appSecret) {
     }
 
     function getTrackingGrade(image) {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             request.post(host + '/grade/tracking/')
             .send(signParams(image))
             .end(done(resolve, reject));

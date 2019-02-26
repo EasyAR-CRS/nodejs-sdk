@@ -1,5 +1,5 @@
 {
-  "name": "nodejs-sdk",
+  "name": "easyar-nodejs-sdk",
   "version": "1.0.2",
   "description": "EasyAR CRS SDK implements nodejs of the CRS API for developers.",
   "main": "index.js",

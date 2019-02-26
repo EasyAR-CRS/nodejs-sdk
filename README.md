@@ -31,14 +31,18 @@ Searching of targets
   * `function searchViaTunnelOnHost(host, tunnel, image)`
 
 ### Sample usage
+To see more examples check bin folder.
 
 #### Add a target represented by an image
 ```javascript
 var farmer = sdk.farmer('http://localhost:8888', 'test_app_key', 'test_app_secret');
 
 farmer.createTarget({
-    'egg': 'spam',
     'image': fs.readFileSync('test.jpg').toString('base64')
+    'name':'sdk-test',
+    'size':'20',
+    'meta':'http://my.com/my-3d-model-example',
+    'type':'ImageTarget'
 })
 .then(function(resp) {
     console.log(resp.result.targetId);

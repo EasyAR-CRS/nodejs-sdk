@@ -11,14 +11,16 @@ var argv = require('yargs')
 
 var fs = require('fs');
 
-var imageFn = argv._[0];
 var host = argv.host;
 var keys = JSON.parse(fs.readFileSync(argv.keys));
-
+var image = fs.readFileSync(argv._[0]);
+if(image.byteLength > 2 * 1024 * 1024){
+    console.error("maximum image size is 2MB.");
+    process.exit();
+}
 var farmer = require('../farmer')(host, keys.appKey, keys.appSecret);
-
 farmer.createTarget({
-    'image': fs.readFileSync(imageFn).toString('base64'),
+    'image': image.toString('base64'),
     'name':'sdk-test',
     'size':'20',
     'meta':'http://my.com/my-3d-model-example',

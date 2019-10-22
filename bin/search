@@ -21,8 +21,9 @@ gateway.search({
     'image': fs.readFileSync(imageFn).toString('base64')
 })
 .then(function(resp) {
-    console.log(resp);
+    console.log(JSON.stringify(resp));
 })
 .fail(function(err) {
+    console.log("response error");
     console.log(err);
 });

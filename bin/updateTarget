@@ -12,13 +12,16 @@ var argv = require('yargs')
 var fs = require('fs');
 
 var targetId = argv._[0];
-var imageFn = argv._[1];
 var host = argv.host;
 var keys = JSON.parse(fs.readFileSync(argv.keys));
-
+var image = fs.readFileSync(argv._[1]);
+if(image.byteLength > 2 * 1024 * 1024){
+    console.error("maximum image size is 2MB.");
+    process.exit();
+}
 var farmer = require('../farmer')(host, keys.appKey, keys.appSecret);
-
-farmer.updateTarget(targetId ,{
+farmer.createTarget({
+    'image': image.toString('base64'),
     'image': fs.readFileSync(imageFn).toString('base64'),
     'name':'sdk-test-update',
     'size':'20',

@@ -10,10 +10,23 @@ function genSign(params, appSecret) {
     return crypto.createHash('sha256').update(paramsStr).digest('hex');
 }
 
-exports.signParams = function(params, timestamp, appKey, appSecret) {
-    params.timestamp = timestamp;
-    params.appKey = appKey;
-    params.signature = genSign(params, appSecret);
-
+// Deprecated
+// For EasyAR SDK 3.x and lower
+function signParamsByAppkey(keypair, params) {
+    params = params || {};
+    params.timestamp = new Date().getTime();
+    params.appKey = keypair.appKey;
+    params.signature = genSign(params, keypair.appSecret);
     return params;
 };
+
+function signParamsByAPIKeys(keypair, params) {
+    params = params || {};
+    params.timestamp = new Date().getTime();
+    params.appId = keypair.appId;
+    params.apiKey = keypair.apiKey;
+    params.signature = genSign(params, keypair.apiSecret);
+    return params;
+};
+
+exports.signParams =  signParamsByAPIKeys;

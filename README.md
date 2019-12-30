@@ -1,4 +1,6 @@
 ### Updates
+* 2019/12/30 APIKey is supported. For new AR Cloud and EasyAR SDK 4.x
+
 * 2018/08/24 Upgrade with new authentication for EasyAR CRS Cloud 3.0 API, and more APIs are opened for managing databases.
 
 * 2018/08/07 NodeJS SDK v1.0 for EasyAR CRS Cloud.

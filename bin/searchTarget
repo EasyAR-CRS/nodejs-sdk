@@ -15,7 +15,7 @@ var imageFn = argv._[0];
 var host = argv.host;
 var keys = JSON.parse(fs.readFileSync(argv.keys));
 
-var gateway = require('../gateway')(host, keys.appKey, keys.appSecret);
+var gateway = require('../gateway')(host, keys);
 
 gateway.createTunnel()
 .then(function(resp) {

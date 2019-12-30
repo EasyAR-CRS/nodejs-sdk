@@ -19,10 +19,9 @@ if(image.byteLength > 2 * 1024 * 1024){
     console.error("maximum image size is 2MB.");
     process.exit();
 }
-var farmer = require('../farmer')(host, keys.appKey, keys.appSecret);
-farmer.createTarget({
+var farmer = require('../farmer')(host, keys);
+farmer.updateTarget(targetId, {
     'image': image.toString('base64'),
-    'image': fs.readFileSync(imageFn).toString('base64'),
     'name':'sdk-test-update',
     'size':'20',
     'meta':'update meta data',

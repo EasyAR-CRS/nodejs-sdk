@@ -1,4 +1,5 @@
 {
-  "appKey": "--here is your crs image space's key--",
-  "appSecret": "--here is your crs image space's secret--"
+  "appId": "--here is your appId for CRS App Instance for SDK 4--",
+  "apiKey": "--here is your api key which is create from website and which has crs permission--",
+  "apiSecret": "--here is your api secret which is create from website--"
 }

@@ -8,16 +8,7 @@ Q.longStackSupport = true;
 
 var auth = require('./auth');
 
-function gatewayClient(host, appKey, appSecret) {
-
-    function signParams(params) {
-        params = params || {};
-        return auth.signParams(params,
-            new Date().getTime(),
-            appKey,
-            appSecret
-        );
-    }
+function gatewayClient(host, keypair) {
 
     function errorJson(json) {
         return new Error(JSON.stringify(json, null, 2));
@@ -45,7 +36,9 @@ function gatewayClient(host, appKey, appSecret) {
     function search(image) {
         return Q.promise(function(resolve, reject) {
             request.post(host + '/search')
-            .send(signParams(image))
+            .set('Connection','keep-alive')
+            .send(auth.signParams(keypair, image))
+            //.set('Authorization',keypair.token)
             .end(done(resolve, reject));
         });
     }
@@ -53,7 +46,7 @@ function gatewayClient(host, appKey, appSecret) {
     function createTunnel() {
         return Q.promise(function(resolve, reject) {
             request.post(host + '/tunnels/')
-            .send(signParams())
+            .send(auth.signParams(keypair))
             .end(done(resolve, reject));
         });
     }

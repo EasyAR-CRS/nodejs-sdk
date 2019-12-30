@@ -6,16 +6,7 @@ Q.longStackSupport = true;
 
 var auth = require('./auth');
 
-function farmerClient(host, appKey, appSecret) {
-
-    function signParams(params) {
-        params = params || {};
-        return auth.signParams(params,
-            new Date().getTime(),
-            appKey,
-            appSecret
-        );
-    }
+function farmerClient(host, keypair) {
 
     function errorJson(json) {
         return new Error(JSON.stringify(json, null, 2));
@@ -43,18 +34,7 @@ function farmerClient(host, appKey, appSecret) {
     function getTargetsCount() {
         return Q.promise(function(resolve, reject) {
             request.get(host + '/targets/count')
-            .query(signParams())
-            .end(done(resolve, reject));
-        });
-    }
-
-    function getTargets(limit,last) {
-        return Q.promise(function(resolve, reject) {
-            request.get(host + '/targets/?last=' + last + '&limit=' + limit)
-            .query(signParams({
-                "last":last,
-                "limit":limit
-            }))
+            .query(auth.signParams(keypair))
             .end(done(resolve, reject));
         });
     }
@@ -62,7 +42,7 @@ function farmerClient(host, appKey, appSecret) {
     function getTargetsByPage(pageNum,pageSize) {
         return Q.promise(function(resolve, reject) {
             request.get(host + '/targets/infos?pageNum=' + pageNum + '&pageSize=' + pageSize)
-            .query(signParams({
+            .query(auth.signParams(keypair, {
                 "pageNum":pageNum,
                 "pageSize":pageSize
             }))
@@ -73,7 +53,7 @@ function farmerClient(host, appKey, appSecret) {
     function createTarget(target) {
         return Q.promise(function(resolve, reject) {
             request.post(host + '/targets/')
-            .send(signParams(target))
+            .send(auth.signParams(keypair, target))
             .end(done(resolve, reject));
         });
     }
@@ -81,7 +61,7 @@ function farmerClient(host, appKey, appSecret) {
     function getTarget(targetId) {
         return Q.promise(function(resolve, reject) {
             request.get(host + '/target/' + targetId)
-            .query(signParams())
+            .query(auth.signParams(keypair))
             .end(done(resolve, reject));
         });
     }
@@ -89,7 +69,7 @@ function farmerClient(host, appKey, appSecret) {
     function updateTarget(targetId, data) {
         return Q.promise(function(resolve, reject) {
             request.put(host + '/target/' + targetId)
-            .send(signParams(data))
+            .send(auth.signParams(keypair, data))
             .end(done(resolve, reject));
         });
     }
@@ -97,7 +77,7 @@ function farmerClient(host, appKey, appSecret) {
     function deleteTarget(targetId) {
         return Q.promise(function(resolve, reject) {
             request.del(host + '/target/' + targetId)
-            .query(signParams())
+            .query(auth.signParams(keypair))
             .end(done(resolve, reject));
         });
     }
@@ -105,7 +85,7 @@ function farmerClient(host, appKey, appSecret) {
     function similar(image) {
         return Q.promise(function(resolve, reject) {
             request.post(host + '/similar/')
-            .send(signParams(image))
+            .send(auth.signParams(keypair, image))
             .end(done(resolve, reject));
         });
     }
@@ -113,7 +93,7 @@ function farmerClient(host, appKey, appSecret) {
     function getDetectionGrade(image) {
         return Q.promise(function(resolve, reject) {
             request.post(host + '/grade/detection/')
-            .send(signParams(image))
+            .send(auth.signParams(keypair, image))
             .end(done(resolve, reject));
         });
     }
@@ -121,7 +101,7 @@ function farmerClient(host, appKey, appSecret) {
     function getTrackingGrade(image) {
         return Q.promise(function(resolve, reject) {
             request.post(host + '/grade/tracking/')
-            .send(signParams(image))
+            .send(auth.signParams(keypair, image))
             .end(done(resolve, reject));
         });
     }
@@ -129,7 +109,6 @@ function farmerClient(host, appKey, appSecret) {
     return {
         ping: ping,
         getTargetsCount: getTargetsCount,
-        getTargets: getTargets,
         createTarget: createTarget,
         getTarget: getTarget,
         getTargetsByPage:getTargetsByPage,

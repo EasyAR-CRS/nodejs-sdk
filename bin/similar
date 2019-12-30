@@ -15,7 +15,7 @@ var imageFn = argv._[0];
 var host = argv.host;
 var keys = JSON.parse(fs.readFileSync(argv.keys));
 
-var farmer = require('../farmer')(host, keys.appKey, keys.appSecret);
+var farmer = require('../farmer')(host, keys);
 
 farmer.similar({
     'image': fs.readFileSync(imageFn).toString('base64')

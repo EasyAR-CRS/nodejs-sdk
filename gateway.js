@@ -43,6 +43,15 @@ function gatewayClient(host, keypair) {
         });
     }
 
+    function searchWithFile(imagePath, params) {
+        return Q.promise(function(resolve, reject) {
+            var req = request.post(host + '/v2/search')
+            .attach('image', imagePath);
+            genRequest(req, auth.signParams(keypair, params))
+            .end(done(resolve, reject));
+        });
+    }
+
     function createTunnel() {
         return Q.promise(function(resolve, reject) {
             request.post(host + '/tunnels/')
@@ -76,12 +85,20 @@ function gatewayClient(host, keypair) {
         return searchViaTunnelOnHost(host.substr(host.indexOf('://') + 3), tunnel, image);
     }
 
+    function genRequest(req, param) {
+        Object.keys(param).forEach(key => {
+            req.field(key, param[key])
+          });
+        return req;
+    }
+
     return {
         ping: ping,
         search: search,
         createTunnel: createTunnel,
         searchViaTunnelOnHost: searchViaTunnelOnHost,
-        searchViaTunnel: searchViaTunnel
+        searchViaTunnel: searchViaTunnel,
+        searchWithFile: searchWithFile
     };
 
 }

@@ -1,9 +1,6 @@
 'use strict';
 
 var request = require('superagent');
-var Q = require('q');
-Q.longStackSupport = true;
-
 var auth = require('./auth');
 
 function farmerClient(host, keypair) {
@@ -25,14 +22,14 @@ function farmerClient(host, keypair) {
     }
 
     function ping() {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             request.get(host + '/ping')
             .end(done(resolve, reject));
         });
     }
 
     function getTargetsCount() {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             request.get(host + '/targets/count')
             .query(auth.signParams(keypair))
             .end(done(resolve, reject));
@@ -40,7 +37,7 @@ function farmerClient(host, keypair) {
     }
 
     function getTargetsByPage(pageNum,pageSize) {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             request.get(host + '/targets/infos?pageNum=' + pageNum + '&pageSize=' + pageSize)
             .query(auth.signParams(keypair, {
                 "pageNum":pageNum,
@@ -50,8 +47,8 @@ function farmerClient(host, keypair) {
         });
     }
 
-    function createTarget(target) {
-        return Q.promise(function(resolve, reject) {
+    function  createTarget(target) {
+        return new Promise(function(resolve, reject) {
             request.post(host + '/targets/')
             .send(auth.signParams(keypair, target))
             .end(done(resolve, reject));
@@ -59,7 +56,7 @@ function farmerClient(host, keypair) {
     }
 
     function getTarget(targetId) {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             request.get(host + '/target/' + targetId)
             .query(auth.signParams(keypair))
             .end(done(resolve, reject));
@@ -67,7 +64,7 @@ function farmerClient(host, keypair) {
     }
 
     function updateTarget(targetId, data) {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             request.put(host + '/target/' + targetId)
             .send(auth.signParams(keypair, data))
             .end(done(resolve, reject));
@@ -75,7 +72,7 @@ function farmerClient(host, keypair) {
     }
 
     function deleteTarget(targetId) {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             request.del(host + '/target/' + targetId)
             .query(auth.signParams(keypair))
             .end(done(resolve, reject));
@@ -83,7 +80,7 @@ function farmerClient(host, keypair) {
     }
 
     function similar(image) {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             request.post(host + '/similar/')
             .send(auth.signParams(keypair, image))
             .end(done(resolve, reject));
@@ -91,7 +88,7 @@ function farmerClient(host, keypair) {
     }
 
     function getDetectionGrade(image) {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             request.post(host + '/grade/detection/')
             .send(auth.signParams(keypair, image))
             .end(done(resolve, reject));
@@ -99,7 +96,7 @@ function farmerClient(host, keypair) {
     }
 
     function getTrackingGrade(image) {
-        return Q.promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             request.post(host + '/grade/tracking/')
             .send(auth.signParams(keypair, image))
             .end(done(resolve, reject));

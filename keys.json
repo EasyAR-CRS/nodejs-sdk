@@ -1,4 +1,5 @@
 {
+  "serverEnd":"--here is your Server-end (Target Mangement) URL for CRS App Instance for SDK 4--",
   "appId": "--here is your appId for CRS App Instance for SDK 4--",
   "apiKey": "--here is your api key which is create from website and which has crs permission--",
   "apiSecret": "--here is your api secret which is create from website--"

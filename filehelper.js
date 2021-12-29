@@ -29,7 +29,7 @@ function getFiles() {
 
     var files = fs.readdirSync(dirname);
     files.forEach(function (item, index) {
-      if (path.extname(item) == ".png" || path.extname(item) == ".png" ){
+      if (path.extname(item) == ".png" || path.extname(item) == ".jpg" ){
         var imagePath = `${dirname}${item}`
         imageList.push(imagePath);
       }

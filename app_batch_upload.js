@@ -15,7 +15,7 @@ async function uploadProducts(productName, dir) {
     var imagePath = images[i];
     for (var retry = 0; retry < 3; retry++) {
       try {
-        console.log(`开始上传${i + 1}/${images.length} }`);
+        console.log(`开始上传${i + 1}/${images.length} `);
         console.log(`${path.basename(imagePath)}`);
 
         var resp = await farmer.createTarget({
@@ -33,6 +33,7 @@ async function uploadProducts(productName, dir) {
       }
     }
     console.log(`结束上传${i + 1}/${images.length} `);
+    console.log();
   }
 }
 
@@ -51,12 +52,4 @@ async function uploadAll() {
 }
 
 uploadAll();
-//  async  function deleteImage(){
-//     await farmer.deleteTarget('f8fce8f6-89e2-4fc1-8385-46a1ebb2f3b9')
-//     console.log('delete 1')
-//     await farmer.deleteTarget('1d3cc4c3-a61d-4fd0-b745-10d06ae041b1')
-//     console.log('delete 2')
-//     await farmer.deleteTarget('48adeb88-f804-417e-93c5-d9dc978f6adb')
-//     console.log('delete 3')
-// }
-// deleteImage()
+
